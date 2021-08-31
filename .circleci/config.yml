@@ -15,7 +15,7 @@ jobs:
       - run:
           name: ssh configure
           command: |
-            export ANSIBLE_HOST_KEY_CHECKING=False
+           ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
       - run:
           name: Configure server
           command: |
