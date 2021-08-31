@@ -15,11 +15,11 @@ jobs:
       - run:
           name: ssh configure
           command: |
-           echo "[defaults]" >> /etc/ansible/ansible.cfg
+           echo "[defaults]" > ~/.ansible.cfg
       - run:
           name: ssh configure 2
           command: |
-           echo "host_key_checking = False" >> /etc/ansible/ansible.cfg
+           echo "host_key_checking = False" >>  ~/.ansible.cfg
       - run:
           name: Configure server
           command: |
