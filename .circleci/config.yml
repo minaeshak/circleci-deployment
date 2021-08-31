@@ -6,6 +6,10 @@ jobs:
       - image: python:3.7-alpine3.11
     steps:
       - checkout
+      - run:
+          name: ssh configure
+          command: |
+            ssh-keyscan 18.192.69.172 >> ~/.ssh/known_hosts
       - add_ssh_keys:
           fingerprints: ["57:b5:3c:2c:80:24:a1:1a:80:3e:28:e6:8c:81:01:39"] # You can get this ID in the section where you registered the SSH Key
       - run:
