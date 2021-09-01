@@ -1,5 +1,6 @@
 version: 2.1
 commands:
+
   destroy_environment:
     steps:
       - run:
@@ -47,13 +48,20 @@ jobs:
   smoke_test:
     docker:
       - image: amazon/aws-cli
+
+              --template-file template.yml \
+              --stack-name my-stack 
+
+
     steps:
       - run: apk add --update curl
       - run:
           name: "smoke test"
           command: |
             return 1
-      - destroy_environment
+ 
+
+
 
 
 workflows:
@@ -63,4 +71,5 @@ workflows:
       - smoke_test:
           requires:
             - create_ec2
+
 
