@@ -58,18 +58,18 @@ jobs:
           command: |
             return 1
 
-create_and_deploy_front_end:
-  docker:
-    - image: amazon/aws-cli
-  steps:
-    - checkout
-    - run:
-        name: Execute bucket.yml - Create Cloudformation Stack
-        command: |
-          aws cloudformation deploy \
-          --template-file bucket.yml \
-          --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
-          --parameter-overrides MyBucketName="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
+  create_and_deploy_front_end:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Execute bucket.yml - Create Cloudformation Stack
+          command: |
+            aws cloudformation deploy \
+            --template-file bucket.yml \
+            --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
+            --parameter-overrides MyBucketName="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
 
 get_last_deployment_id:
   docker:
