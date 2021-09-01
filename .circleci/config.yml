@@ -60,4 +60,7 @@ workflows:
   my_workflow:
     jobs:
       - create_ec2
-      - smoke_test
+      - smoke_test:
+          requires:
+            - create_ec2
+
