@@ -1,5 +1,12 @@
 version: 2.1
-
+commands:
+  destroy_environment:
+    steps:
+      - run:
+          name: "Delete Stack"
+          command: |
+            aws cloudformation delete-stack my-stack
+          when: on_fail
 jobs:
   configure_infrastructure:
     docker:
@@ -24,6 +31,19 @@ jobs:
           name: Configure server
           command: |
             ansible-playbook -i inventory.txt main-remote.yaml
+
+  create_ec2:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Create Stack from template
+          command: |
+            aws cloudformation deploy \
+              --template-file template.yml \
+              --stack-name my-stack 
+
   smoke_test:
     docker:
       - image: alpine:latest
@@ -32,16 +52,12 @@ jobs:
       - run:
           name: "smoke test"
           command: |
-            URL="https://blogtest.udacity.com"
-            if curl -s --head ${URL}
-            then 
-            return 0
-            else 
             return 1
-            fi
+      - destroy_environment
 
 
 workflows:
   my_workflow:
     jobs:
+      - create_ec2
       - smoke_test
