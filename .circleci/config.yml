@@ -5,7 +5,7 @@ commands:
       - run:
           name: "Delete Stack"
           command: |
-            aws cloudformation delete-stack my-stack
+            aws cloudformation delete-stack --stack-name my-stack
           when: on_fail
 jobs:
   configure_infrastructure:
